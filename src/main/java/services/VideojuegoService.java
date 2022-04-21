@@ -1,18 +1,18 @@
 package services;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
 import java.util.Scanner;
 
-import interfaces.IVideojuegoDAO;
+import com.opencsv.exceptions.CsvValidationException;
+
 import interfaces.IVideojuegoService;
 import model.Videojuego;
-import Datos.Fichero;
 import daos.VideojuegoDAO;
 
 public class VideojuegoService implements IVideojuegoService {
 
+	VideojuegoDAO videojuegodao = new VideojuegoDAO();
+	
 	@Override
 	public void darDeAltaVideojuego() {
 		
@@ -32,19 +32,22 @@ public class VideojuegoService implements IVideojuegoService {
 		String publisher = sc.next();
 	
 		Videojuego videojuego = new Videojuego(17000,nombre_videojuego,plataforma,anyo_lanzamiento,genero,publisher);
-		VideojuegoDAO videojuegodao = new VideojuegoDAO();
 		
 		videojuegodao.addVideojuego(videojuego);
 		
-		
-
-
 	}
 
 	@Override
-	public ArrayList<Videojuego> listado_videojuegos() {
+	public void listado_videojuegos() throws CsvValidationException, IOException {
 		
-		return null;
+		try {
+			for (String[] juego : videojuegodao.listado()) {
+				  System.out.println(juego[0]+ " " +juego[1]+ " " +juego[2]+ " " +juego[3]+ " " +juego[4]+ " " + juego[5]);
+				}
+		} catch (CsvValidationException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
