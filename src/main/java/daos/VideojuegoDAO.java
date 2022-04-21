@@ -53,7 +53,7 @@ public class VideojuegoDAO implements IVideojuegoDAO {
 					lista.remove(juego);
 					fichero.escribirCSV(lista);
 					break;
+					}
 				}
 			}
-		}
 }
