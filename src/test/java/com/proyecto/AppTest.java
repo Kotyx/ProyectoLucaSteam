@@ -56,12 +56,49 @@ public class AppTest {
 		logger.info("No ha fallado porque el videojuego esta lleno");
 	}
 	
+	/*@Test
+	public void tipoDatoIncorrecto() throws IOException, CsvValidationException {
+		// assertNull(VideojuegoDAO.addVideojuego(null));
+		try {
+			Videojuego juego = new Videojuego("ojo", "Metroid", "DS", 2005, "Platform", "Nintendo");
+			videojuegodao.addVideojuego(juego);
+			ArrayList<String[]> lista = new ArrayList<>();
+			lista = fichero.leerCSV();
+			assertTrue(lista.get(lista.size()-1)[0]!= null);
+		}catch(Exception e) {
+			logger.info("Falla porque le pasamos un tipo de dato incorrecto");
+		}
+	}*/
+	
 	@Test
 	public void listadoCorrecto() throws IOException, CsvValidationException {
 		// assertNull(VideojuegoDAO.addVideojuego(null));
 		ArrayList<String[]> lista = new ArrayList<>();
 		lista = fichero.leerCSV();
 		assertTrue(lista.get(lista.size()-1)[0]!= null);
-		logger.info("No ha fallado porque el videojuego esta lleno");
+		logger.info("No ha fallado porque hace el listado correcto");
+	}
+	
+	@Test
+	public void listadoNintendoCorrecto() throws IOException, CsvValidationException {
+		// assertNull(VideojuegoDAO.addVideojuego(null));
+		ArrayList<String[]> lista = new ArrayList<>();
+		lista = fichero.leerCSV();
+		assertTrue(lista.get(lista.size()-1)[0]!= null);
+		logger.info("No ha fallado porque hace el listado Nintendo correcto");
+	}
+	
+	@Test
+	public void tipoDatoEspecial() throws IOException, CsvValidationException {
+		// assertNull(VideojuegoDAO.addVideojuego(null));
+		try {
+			Videojuego juego = new Videojuego(17000, "Metr@id", "D$", 2005, "Platform", "Nintendo");
+			videojuegodao.addVideojuego(juego);
+			ArrayList<String[]> lista = new ArrayList<>();
+			lista = fichero.leerCSV();
+			assertTrue(lista.get(lista.size()-1)[0]!= null);
+		}catch(Exception e) {
+			logger.info("Falla porque le pasamos un tipo de dato incorrecto");
+		}
 	}
 }
