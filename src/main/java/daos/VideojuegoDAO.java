@@ -11,7 +11,6 @@ import model.Videojuego;
 
 public class VideojuegoDAO implements IVideojuegoDAO {
 	
-	
 	Fichero fichero = new Fichero();
 
 	public void addVideojuego(Videojuego videojuego) {
@@ -22,7 +21,6 @@ public class VideojuegoDAO implements IVideojuegoDAO {
 			
 			String[] atributosVideojuego = new String[6];
 		
-			
 			atributosVideojuego[0] = Integer.toString(videojuego.getRank());
 			atributosVideojuego[1] = videojuego.getName();
 			atributosVideojuego[2] = videojuego.getPlatform();
@@ -45,7 +43,17 @@ public class VideojuegoDAO implements IVideojuegoDAO {
 		
 		return fichero.leerCSV();
 	}
-	
-	
-	
+
+	public void removeVideojuego(String nombre) throws CsvValidationException, IOException {
+		// TODO Auto-generated method stub
+		ArrayList<String[]> lista=listado();
+
+			for(String[] juego : lista) {
+				if(juego[1].equals(nombre)) {
+					lista.remove(juego);
+					fichero.escribirCSV(lista);
+					break;
+				}
+			}
+		}
 }
