@@ -54,10 +54,23 @@ public class Controlador {
 					}
 					break; 
 				case 3 :
-					System.out.println("Opcion en mantenimiento...");
+					try {
+						vjservice.listado_videojuegos_plataforma();
+					} catch (CsvValidationException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					break; 
 				case 4:
-					System.out.println("Opcion en mantenimiento...");
+					try {
+						vjservice.darDeBajaVideojuego();
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					break;
 				case 5:
 					System.out.println("Opcion en mantenimiento...");
@@ -69,7 +82,15 @@ public class Controlador {
 					System.out.println("Opcion en mantenimiento...");
 					break;
 				case 8:
-					System.out.println("Opcion en mantenimiento...");
+					try {
+						vjservice.listado_videojuegos_nintendo();
+					} catch (CsvValidationException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					break;
 				case 9 :
 					System.out.println("Opcion en mantenimiento...");
