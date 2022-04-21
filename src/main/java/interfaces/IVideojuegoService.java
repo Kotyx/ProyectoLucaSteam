@@ -9,7 +9,7 @@ import model.Videojuego;
 
 public interface IVideojuegoService {
 	
-	public void darDeAltaVideojuego() throws IOException;
+	public void darDeAltaVideojuego() throws IOException, CsvValidationException;
 	public void listado_videojuegos() throws CsvValidationException, IOException;
 	public void listado_videojuegos_plataforma() throws CsvValidationException, IOException;
 	public void listado_videojuegos_nintendo() throws CsvValidationException, IOException;
