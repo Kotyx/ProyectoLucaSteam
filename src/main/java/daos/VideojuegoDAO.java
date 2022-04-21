@@ -1,6 +1,9 @@
 package daos;
 
+import java.io.IOException;
 import java.util.ArrayList;
+
+import com.opencsv.exceptions.CsvValidationException;
 
 import Datos.Fichero;
 import interfaces.IVideojuegoDAO;
@@ -39,30 +42,15 @@ public class VideojuegoDAO implements IVideojuegoDAO {
 
 		
 	}
-	
-	
 
-//	@Override
-//	public void addVideojuego(String[] videojuego) {
-//		fichero.add(videojuego);
-//		int lastIdx = fichero.size() - 1;
-//		System.out.println(fichero.get(lastIdx));
-//		
-//	}
+	@Override
+	public ArrayList<String[]> listado() throws CsvValidationException, IOException {
+		
+		
+		return fichero.leerCSV();
+	}
 	
-	// videojuego.setName(String name);
-//	
 	
-//	@Override
-//	public void addVideojuego(Videojuego videojuego) {
-//		fichero.add(videojuego);
-//		for (Videojuego vid : fichero) {
-//			if (vid.getRank() == fichero.size() - 1) {
-//				System.out.println(vid);
-//			}		
-//		}
-//
-//	}
 	
 
 
