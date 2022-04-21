@@ -13,5 +13,6 @@ public interface IVideojuegoDAO {
 
 	public void addVideojuego(Videojuego videojuego);
 	public ArrayList<String[]> listado() throws CsvValidationException, IOException;
+	public void removeVideojuego(String nombre) throws CsvValidationException, IOException;
 
 }
