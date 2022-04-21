@@ -44,7 +44,7 @@ public class VideojuegoDAO implements IVideojuegoDAO {
 		return fichero.leerCSV();
 	}
 
-	public void removeVideojuego(String nombre) throws CsvValidationException, IOException {
+	public boolean removeVideojuego(String nombre) throws CsvValidationException, IOException {
 		// TODO Auto-generated method stub
 		ArrayList<String[]> lista=listado();
 
@@ -52,8 +52,9 @@ public class VideojuegoDAO implements IVideojuegoDAO {
 				if(juego[1].equals(nombre)) {
 					lista.remove(juego);
 					fichero.escribirCSV(lista);
-					break;
+					return true;
 					}
 				}
+			return false;
 			}
 }
