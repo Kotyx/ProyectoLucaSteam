@@ -1,6 +1,7 @@
 package services;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import com.opencsv.exceptions.CsvValidationException;
@@ -14,7 +15,7 @@ public class VideojuegoService implements IVideojuegoService {
 	VideojuegoDAO videojuegodao = new VideojuegoDAO();
 	
 	@Override
-	public void darDeAltaVideojuego() {
+	public void darDeAltaVideojuego() throws CsvValidationException, IOException {
 		
 		//ESCANER PARA LEER POR 
 		Scanner sc = new Scanner(System.in);
@@ -24,14 +25,17 @@ public class VideojuegoService implements IVideojuegoService {
 		String nombre_videojuego = sc.next();
 		System.out.println("Introduzca la plataforma: ");
 		String plataforma = sc.next();
-		System.out.println("Introduza el aÃ±o de lanzamiento: ");
+		System.out.println("Introduza el año de lanzamiento: ");
 		int anyo_lanzamiento = sc.nextInt();
 		System.out.println("Introduzca el genero: ");
 		String genero = sc.next();
-		System.out.println("Introduzca el nombre de la compaÃ±ia: ");
+		System.out.println("Introduzca el nombre de la compañia: ");
 		String publisher = sc.next();
+		
+		ArrayList<String[]> fich = videojuegodao.listado();
+		int rank=Integer.parseInt(fich.get(fich.size()-1)[0])+1;
 	
-		Videojuego videojuego = new Videojuego(17000,nombre_videojuego,plataforma,anyo_lanzamiento,genero,publisher);
+		Videojuego videojuego = new Videojuego(rank,nombre_videojuego,plataforma,anyo_lanzamiento,genero,publisher);
 		
 		videojuegodao.addVideojuego(videojuego);
 		
