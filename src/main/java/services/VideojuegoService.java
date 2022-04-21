@@ -5,40 +5,43 @@ import java.util.ArrayList;
 
 import java.util.Scanner;
 
+import com.opencsv.exceptions.CsvValidationException;
+
 import interfaces.IVideojuegoDAO;
 import interfaces.IVideojuegoService;
 import model.Videojuego;
 import Datos.Fichero;
+import daos.VideojuegoDAO;
 
 public class VideojuegoService implements IVideojuegoService {
 
-	Fichero fichero=new Fichero();
-	
 	@Override
-	public void darDeAltaVideojuego() throws IOException {
+	public void darDeAltaVideojuego()  {
 		
 		//ESCANER PARA LEER POR 
 		Scanner sc = new Scanner(System.in);
-		ArrayList<String[]> lista=fichero.leerCSV();
+		Fichero fichero=new Fichero();
+		ArrayList<String[]> lista = new ArrayList<>();
 		
 		System.out.println("Introduzca el nombre del videojuego: ");
 		String nombre_videojuego = sc.next();
 		System.out.println("Introduzca la plataforma: ");
 		String plataforma = sc.next();
-		System.out.println("Introduza el año de lanzamiento: ");
+		System.out.println("Introduza el aÃ±o de lanzamiento: ");
 		int anyo_lanzamiento = sc.nextInt();
 		System.out.println("Introduzca el genero: ");
 		String genero = sc.next();
-		System.out.println("Introduzca el nombre de la compañia: ");
+		System.out.println("Introduzca el nombre de la compaÃ±ia: ");
 		String publisher = sc.next();
+	
+		//lista=fichero.leerCSV();
 		
-		
-		Videojuego videojuego = new Videojuego(Integer.parseInt(lista.get(-1)[0])+1,nombre_videojuego,plataforma,anyo_lanzamiento,genero,publisher);
-		IVideojuegoDAO videojuegodao = (IVideojuegoDAO) videojuego;
+		Videojuego videojuego = new Videojuego(17000,nombre_videojuego,plataforma,anyo_lanzamiento,genero,publisher);
+		VideojuegoDAO videojuegodao = new VideojuegoDAO();
 		
 		videojuegodao.addVideojuego(videojuego);
 		
-		sc.close();
+		
 
 
 	}
@@ -47,6 +50,23 @@ public class VideojuegoService implements IVideojuegoService {
 	public ArrayList<Videojuego> listado_videojuegos() {
 		
 		return null;
+	}
+
+	@Override
+	public void darDeBajaVideojuego() throws IOException, CsvValidationException {
+		// TODO Auto-generated method stub
+		Scanner sc = new Scanner(System.in);
+		Fichero fichero=new Fichero();
+		ArrayList<String[]> lista = new ArrayList<>();
+		
+		System.out.println("Introduzca el nombre del videojuego: ");
+		String nombre_videojuego = sc.next();
+		
+		VideojuegoDAO videojuegodao = new VideojuegoDAO();
+		
+		videojuegodao.removeVideojuego(nombre_videojuego);
+		
+		
 	}
 
 }

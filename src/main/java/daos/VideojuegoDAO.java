@@ -1,6 +1,9 @@
 package daos;
 
+import java.io.IOException;
 import java.util.ArrayList;
+
+import com.opencsv.exceptions.CsvValidationException;
 
 import Datos.Fichero;
 import interfaces.IVideojuegoDAO;
@@ -18,7 +21,7 @@ public class VideojuegoDAO implements IVideojuegoDAO {
 			
 			ArrayList<String[]> ficheroActual = fichero.leerCSV();
 			
-			String[] atributosVideojuego = new String[10];
+			String[] atributosVideojuego = new String[6];
 		
 			
 			atributosVideojuego[0] = Integer.toString(videojuego.getRank());
@@ -27,10 +30,6 @@ public class VideojuegoDAO implements IVideojuegoDAO {
 			atributosVideojuego[3] = Integer.toString(videojuego.getYear());
 			atributosVideojuego[4] = videojuego.getGenre();
 			atributosVideojuego[5] = videojuego.getPublisher();
-			atributosVideojuego[6] = "0";
-			atributosVideojuego[7] = "0";
-			atributosVideojuego[8] = "0";
-			atributosVideojuego[9] = "0";
 			
 			ficheroActual.add(atributosVideojuego);
 			
@@ -41,6 +40,25 @@ public class VideojuegoDAO implements IVideojuegoDAO {
 			System.out.println(e);
 		}
 
+		
+	}
+
+	@Override
+	public void removeVideojuego(String nombre) throws CsvValidationException, IOException {
+		// TODO Auto-generated method stub
+		ArrayList<String[]> ficheroActual = fichero.leerCSV();
+		boolean salida=true;
+		
+		while(salida) {
+			for(int i=0;i<ficheroActual.size();i++) {
+				if(ficheroActual.get(i)[1].equals(nombre)) {
+					ficheroActual.remove(i);
+					fichero.escribirCSV(ficheroActual);
+					salida=false;
+				}
+			}
+		}
+		
 		
 	}
 	

@@ -7,52 +7,39 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
+import com.opencsv.exceptions.CsvValidationException;
 
 public class Fichero {
 
-		String csvFile = "vgsales.csv";
-		BufferedReader br = null;
-		String line = "";
-		String split = ",";
-		ArrayList<String[]> fichero = new ArrayList<>();
+	private String csvFile = "C:\\Users\\Usuario\\eclipse-workspace\\proyecto-lucatic-pruebas\\vgsales.csv";
 
-	public ArrayList<String[]> leerCSV() throws IOException{
-		try {
-		    br = new BufferedReader(new FileReader(csvFile));
-		    while ((line = br.readLine()) != null) {
-			    fichero.add(line.split(split));
-			}
-		} catch (FileNotFoundException e) {
-		    e.printStackTrace();
-		} finally {
-		    if (br != null) {
-		        try {
-		            br.close();
-		        } catch (IOException e) {
-		            e.printStackTrace();
-		        }
-		    }
-		}
-		return fichero;
-	}
 	
-	public void escribirCSV(ArrayList<String[]> fichero) throws IOException {	
-		try {
-			CSVWriter writer = new CSVWriter(new FileWriter("vgsales.csv"));
-			writer.writeAll(fichero);
-			writer.close();
-		}catch (FileNotFoundException e) {
-		    e.printStackTrace();
-		} finally {
-		    if (br != null) {
-		        try {
-		            br.close();
-		        } catch (IOException e) {
-		            e.printStackTrace();
-		        }
-		    }
-		}
-	}
+	private ArrayList<String[]> fichero = new ArrayList<>();
+
+public ArrayList<String[]> leerCSV() throws IOException, CsvValidationException{
+	try {
+		CSVReader csvReader = new CSVReader(new FileReader(csvFile));
+		String[] values = null;
+		while ((values = csvReader.readNext()) != null) {
+			fichero.add(values);
+	    }
+	} catch (FileNotFoundException e) {
+	    e.printStackTrace();
+	} 
+	return fichero;
+}
+
+public void escribirCSV(ArrayList<String[]> fichero) throws IOException {	
+	try {
+		CSVWriter writer = new CSVWriter(new FileWriter(csvFile));
+		writer.writeAll(fichero);
+		writer.close();
+	}catch (FileNotFoundException e) {
+	    e.printStackTrace();
+	} 
+}
+
 
 }

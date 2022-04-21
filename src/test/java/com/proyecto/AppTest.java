@@ -3,6 +3,8 @@ package com.proyecto;
 import model.Videojuego;
 import org.junit.jupiter.api.Test;
 
+import com.opencsv.exceptions.CsvValidationException;
+
 import Datos.Fichero;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
@@ -20,7 +22,7 @@ public class AppTest {
 	private static Logger logger;
 
 	private VideojuegoDAO videojuegodao = new VideojuegoDAO();
-	private Fichero fichero; 
+	private Fichero fichero = new Fichero(); 
 
 	static {
 		try {
@@ -31,19 +33,18 @@ public class AppTest {
 	}
 
 	@Test
-	public void datoNoCorrecto() throws IOException, NullPointerException {
+	public void datoNoCorrecto() throws IOException, NullPointerException, CsvValidationException {
 		// assertNull(VideojuegoDAO.addVideojuego(null));
 		ArrayList<String[]> lista = new ArrayList<>();
 		Videojuego video = new Videojuego();
-		System.out.println(video);
 		videojuegodao.addVideojuego(video);
 		lista = fichero.leerCSV();
-		assertFalse(lista.get(-1) != null);
+		assertFalse(lista.get(lista.size()-1)[0] != null);
 		logger.info("Ha fallado por estar vacio");
 	}
 
 	@Test
-	public void datoCorrecto() throws IOException {
+	public void datoCorrecto() throws IOException, CsvValidationException {
 		// assertNull(VideojuegoDAO.addVideojuego(null));
 		Videojuego juego = new Videojuego(17000, "Metroid", "DS", 2005, "Platform", "Nintendo");
 		Videojuego juego2 = new Videojuego(18000, "Mario Bros", "Wii", 2012, "Platform", "Nintendo");
@@ -51,7 +52,16 @@ public class AppTest {
 		videojuegodao.addVideojuego(juego2);
 		ArrayList<String[]> lista = new ArrayList<>();
 		lista = fichero.leerCSV();
-		assertTrue(lista.get(-1) != null);
+		assertTrue(lista.get(lista.size()-1)[0]!= null);
+		logger.info("No ha fallado porque el videojuego esta lleno");
+	}
+	
+	@Test
+	public void listadoCorrecto() throws IOException, CsvValidationException {
+		// assertNull(VideojuegoDAO.addVideojuego(null));
+		ArrayList<String[]> lista = new ArrayList<>();
+		lista = fichero.leerCSV();
+		assertTrue(lista.get(lista.size()-1)[0]!= null);
 		logger.info("No ha fallado porque el videojuego esta lleno");
 	}
 }
