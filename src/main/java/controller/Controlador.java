@@ -1,6 +1,9 @@
 package controller;
 
+import java.io.IOException;
 import java.util.Scanner;
+
+import com.opencsv.exceptions.CsvValidationException;
 
 import interfaces.IVideojuegoService;
 import services.VideojuegoService;
@@ -40,7 +43,15 @@ public class Controlador {
 					}
 					break; 
 				case 2 :
-					vjservice.listado_videojuegos();
+					try {
+						vjservice.listado_videojuegos();
+					} catch (CsvValidationException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					break; 
 				case 3 :
 					System.out.println("Opcion en mantenimiento...");
