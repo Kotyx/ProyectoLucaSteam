@@ -49,5 +49,36 @@ public class VideojuegoService implements IVideojuegoService {
 			e.printStackTrace();
 		}
 	}
-
+	
+	public void listado_videojuegos_plataforma() throws CsvValidationException, IOException {
+		
+		for ( String[] juego : videojuegodao.listado() ) {
+		
+			if(juego[4].equals("Platform")) {
+				System.out.println(juego[0] + " "+ juego[1] + " "+ juego[2] + " "+ juego[3] + " "+ juego[4] + " "+juego[5]);
+			}
+		}
+	}
+	
+	public void listado_videojuegos_nintendo() throws CsvValidationException, IOException {
+		
+		for ( String[] juego : videojuegodao.listado() ) {
+		
+			if(juego[5].equals("Nintendo")) {
+				System.out.println(juego[0] + " "+ juego[1] + " "+ juego[2] + " "+ juego[3] + " "+ juego[4] + " "+juego[5]);
+			}
+		}
+	}
+	
+	public void darDeBajaVideojuego() throws IOException, CsvValidationException {
+		// TODO Auto-generated method stub
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Introduzca el nombre del videojuego: ");
+		String nombre_videojuego = sc.next();
+		videojuegodao.removeVideojuego(nombre_videojuego);
+		
+		
+	}
+	
+	
 }
