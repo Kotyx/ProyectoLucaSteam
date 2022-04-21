@@ -1,6 +1,10 @@
 package controller;
 
+
+import java.io.IOException;
 import java.util.Scanner;
+
+import com.opencsv.exceptions.CsvValidationException;
 
 import interfaces.IVideojuegoService;
 import services.VideojuegoService;
@@ -17,7 +21,7 @@ public class Controlador {
 		boolean seguir=true;
 		while(seguir) {
 			System.out.println("***************************************");
-			System.out.println("1--AÑADIR UN VIDEOJUEGO AL CATALOGO");
+			System.out.println("1--Aï¿½ADIR UN VIDEOJUEGO AL CATALOGO");
 			System.out.println("2--LISTA DE VIDEOJUEGOS GENERAL");
 			System.out.println("3--LISTA DE VIDEOJUEGOS: GENERO -PLATAFORMAS-");
 			System.out.println("4--ELIMINAR UN VIDEOJUEGO DEL CATALOGO");
@@ -25,7 +29,7 @@ public class Controlador {
 			System.out.println("6--LISTA DE VIDEOJUEGOS: SIGLO XX");
 			System.out.println("7--LISTA DE VIDEOJUEGOS POR GENERO");
 			System.out.println("8--LISTA DE VIDEOJUEGOS: SOPORTE NINTENDO");
-			System.out.println("9--LISTA DE VIDEOJUEGOS: AÑOS PARES");
+			System.out.println("9--LISTA DE VIDEOJUEGOS: Aï¿½OS PARES");
 			System.out.println("10-VER LA LISTA DE EDITORES");
 			System.out.println("0--SALIR");
 			System.out.println("***************************************");
@@ -36,14 +40,22 @@ public class Controlador {
 					try {
 						vjservice.darDeAltaVideojuego();
 					} catch(Exception e) {
-						System.out.println("No se ha podido añadir el videojuego.");
+						System.out.println("No se ha podido aï¿½adir el videojuego.");
 					}
 					break; 
 				case 2 :
 					vjservice.listado_videojuegos();
 					break; 
 				case 3 :
-					System.out.println("Opcion en mantenimiento...");
+					try {
+						vjservice.listado_videojuegos_plataforma();
+					} catch (CsvValidationException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					break; 
 				case 4:
 					System.out.println("Opcion en mantenimiento...");
