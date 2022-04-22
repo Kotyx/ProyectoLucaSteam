@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import org.apache.commons.collections.bag.SynchronizedSortedBag;
-
 import com.opencsv.exceptions.CsvValidationException;
 
 import interfaces.IVideojuegoService;
@@ -50,7 +48,7 @@ public class VideojuegoService implements IVideojuegoService {
 	public boolean revisarPlataforma(String plataforma, String nombre) throws CsvValidationException, IOException {
 		
 		for ( String[] juego : videojuegodao.listado()) {		
-			if(juego[1].equals(nombre) && juego[4].equals(plataforma)) {
+			if(juego[1].equals(nombre) & juego[4].equals(plataforma)) {
 						return true;
 					}
 				}
@@ -95,7 +93,7 @@ public class VideojuegoService implements IVideojuegoService {
 	}
 	
 	public void darDeBajaVideojuego() throws IOException, CsvValidationException {
-		// TODO Auto-generated method stub
+		
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Introduzca el nombre del videojuego: ");
 		String nombre_videojuego = sc.next();
@@ -104,7 +102,49 @@ public class VideojuegoService implements IVideojuegoService {
 		}else {
 			System.out.println("no hay videojuegos con ese nombre");
 		}
+	}
+	
+	public void modificarVideojuego() throws CsvValidationException, IOException {
+		Scanner sc = new Scanner(System.in);
 		
+		ArrayList<String[]> fich = videojuegodao.listado();
+		
+		System.out.println("Introduzca el nombre del videojuego: ");
+		String nombre_videojuego = sc.next();
+		System.out.println("Introduzca la plataforma: ");
+		String plataforma = sc.next();
+		
+		if(revisarPlataforma(nombre_videojuego,plataforma)==true) {
+			System.out.println("Introduzca el nombre del nuevo videojuego: ");
+			String nombreNuevo_videojuego = sc.next();
+			System.out.println("Introduzca la plataforma: ");
+			String nuevaPlataforma = sc.next();
+			System.out.println("Introduza el año de lanzamiento: ");
+			int añoNuevo_lanzamiento = sc.nextInt();
+			System.out.println("Introduzca el genero: ");
+			String nuevoGenero = sc.next();
+			System.out.println("Introduzca el nombre de la compañia: ");
+			String nuevoPublisher = sc.next();
+			
+			if(posicion(nombre_videojuego,plataforma)==-1) {
+				
+			}
+			
+		}else {
+			System.out.println("El videojuego no existe");
+		}
+	}
+
+	public int posicion(String nombre, String plataforma) throws CsvValidationException, IOException {
+		
+		for ( String[] juego : videojuegodao.listado()) {		
+			if(juego[1].equals(nombre) & juego[4].equals(plataforma)) {
+				int numero=videojuegodao.listado().indexOf(juego[0]);
+				return numero;
+					}
+				}
+		
+		return -1;
 	}
 	
 	
