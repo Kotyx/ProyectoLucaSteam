@@ -12,7 +12,7 @@ import com.opencsv.exceptions.CsvValidationException;
 
 public class Fichero {
 
-	String csvFile = "C:\\Users\\Guille\\Desktop\\Curso\\parte2\\vgsales - copia.csv";
+	String csvFile = "src\\main\\java\\Datos\\vgsales.csv";
 
 public ArrayList<String[]> leerCSV() throws IOException, CsvValidationException{
 	
