@@ -1,6 +1,9 @@
 package daos;
 
+import java.io.IOException;
 import java.util.ArrayList;
+
+import com.opencsv.exceptions.CsvValidationException;
 
 import Datos.Fichero;
 import interfaces.IVideojuegoDAO;
@@ -8,10 +11,8 @@ import model.Videojuego;
 
 public class VideojuegoDAO implements IVideojuegoDAO {
 	
-	
 	Fichero fichero = new Fichero();
 
-	@Override
 	public void addVideojuego(Videojuego videojuego) {
 				
 		try {
@@ -20,7 +21,6 @@ public class VideojuegoDAO implements IVideojuegoDAO {
 			
 			String[] atributosVideojuego = new String[6];
 		
-			
 			atributosVideojuego[0] = Integer.toString(videojuego.getRank());
 			atributosVideojuego[1] = videojuego.getName();
 			atributosVideojuego[2] = videojuego.getPlatform();
@@ -36,34 +36,25 @@ public class VideojuegoDAO implements IVideojuegoDAO {
 			// TODO Auto-generated catch block
 			System.out.println(e);
 		}
-
 		
 	}
 	
-	
+	public ArrayList<String[]> listado() throws CsvValidationException, IOException{
+		
+		return fichero.leerCSV();
+	}
 
-//	@Override
-//	public void addVideojuego(String[] videojuego) {
-//		fichero.add(videojuego);
-//		int lastIdx = fichero.size() - 1;
-//		System.out.println(fichero.get(lastIdx));
-//		
-//	}
-	
-	// videojuego.setName(String name);
-//	
-	
-//	@Override
-//	public void addVideojuego(Videojuego videojuego) {
-//		fichero.add(videojuego);
-//		for (Videojuego vid : fichero) {
-//			if (vid.getRank() == fichero.size() - 1) {
-//				System.out.println(vid);
-//			}		
-//		}
-//
-//	}
-	
+	public boolean removeVideojuego(String nombre) throws CsvValidationException, IOException {
+		// TODO Auto-generated method stub
+		ArrayList<String[]> lista=listado();
 
-
+			for(String[] juego : lista) {
+				if(juego[1].equals(nombre)) {
+					lista.remove(juego);
+					fichero.escribirCSV(lista);
+					return true;
+					}
+				}
+			return false;
+			}
 }

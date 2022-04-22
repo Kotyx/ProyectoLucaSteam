@@ -3,11 +3,23 @@ package interfaces;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import com.opencsv.exceptions.CsvValidationException;
+
 import model.Videojuego;
 
 public interface IVideojuegoService {
 	
-	public void darDeAltaVideojuego() throws IOException;
-	public ArrayList<Videojuego> listado_videojuegos(); 
+	public void darDeAltaVideojuego() throws IOException, CsvValidationException;
+	public void listado_videojuegos() throws CsvValidationException, IOException;
+	public void listado_videojuegos_plataforma() throws CsvValidationException, IOException;
+	public void listado_videojuegos_nintendo() throws CsvValidationException, IOException;
+	public void darDeBajaVideojuego() throws IOException, CsvValidationException;
+	public boolean revisarPlataforma(String plataforma, String nombre) throws CsvValidationException, IOException;
+	public String mostrarDatos(String[] juego);
+	public void modificarVideojuego() throws CsvValidationException, IOException;
+	public void listar_editores() throws CsvValidationException, IOException;
+	public void listado_videojuegos_genero(String genero) throws CsvValidationException, IOException;
+	public void listado_videojuegos_sigloxx() throws CsvValidationException, IOException;
+	public void listado_videojuegos_anyo_par() throws CsvValidationException, IOException;
 
 }
