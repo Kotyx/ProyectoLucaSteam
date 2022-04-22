@@ -14,5 +14,8 @@ public interface IVideojuegoService {
 	public void listado_videojuegos_plataforma() throws CsvValidationException, IOException;
 	public void listado_videojuegos_nintendo() throws CsvValidationException, IOException;
 	public void darDeBajaVideojuego() throws IOException, CsvValidationException;
+	public boolean revisarPlataforma(String plataforma, String nombre) throws CsvValidationException, IOException;
+	public String mostrarDatos(String[] juego);
+	public void modificarVideojuego() throws CsvValidationException, IOException;
 
 }
