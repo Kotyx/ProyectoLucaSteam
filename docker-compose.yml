@@ -1,5 +1,5 @@
 version: '2'
 services:
-    contenedor_videojuego:
-      container_name: contenedor_videojuego
+    lucasteam:
+      container_name: lucasteam
       build: .
