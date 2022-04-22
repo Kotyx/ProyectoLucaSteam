@@ -9,9 +9,9 @@ import com.opencsv.exceptions.CsvValidationException;
 
 import Datos.Fichero;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -37,18 +37,8 @@ public class AppTest {
 		}
 	}
 
-	// antiguo datoNoCorrecto()
-	@Test
-	public void siDoyDeAltaUnVideojuegoVacioDeberiaSaltarExcepcion() throws IOException, NullPointerException, CsvValidationException {
-		// assertNull(VideojuegoDAO.addVideojuego(null));
-		ArrayList<String[]> lista = new ArrayList<>();
-		Videojuego video = new Videojuego();
-		videojuegodao.addVideojuego(video);
-		lista = fichero.leerCSV();
-		assertFalse(lista.get(lista.size()-1)[1] != "");
-		logger.info("Ha fallado por estar vacio");
-	}
-
+	
+	//Tests ALTA VIDEOJUEGOS
 	
 	// antiguo datoCorrecto()
 	@Test
@@ -64,19 +54,18 @@ public class AppTest {
 		// logger.info("No ha fallado porque el videojuego esta lleno");
 	}
 	
-	/*@Test
-	public void tipoDatoIncorrecto() throws IOException, CsvValidationException {
-		// assertNull(VideojuegoDAO.addVideojuego(null));
-		try {
-			Videojuego juego = new Videojuego("ojo", "Metroid", "DS", 2005, "Platform", "Nintendo");
-			videojuegodao.addVideojuego(juego);
-			ArrayList<String[]> lista = new ArrayList<>();
-			lista = fichero.leerCSV();
-			assertTrue(lista.get(lista.size()-1)[0]!= null);
-		}catch(Exception e) {
-			logger.info("Falla porque le pasamos un tipo de dato incorrecto");
-		}
-	}*/
+	
+   @Test
+    public void siAñadoVideojuegoDeberiaEstarEnLaLista() throws CsvValidationException, IOException {
+	   
+        // Give: dado un videojuego
+        Videojuego juego = new Videojuego(99000, "Metroid", "DS", 2005, "Platform", "Nintendo");
+        // When: si lo doy de alta
+        videojuegodao.addVideojuego(juego);
+        // Then: aparece en la lista
+        assertTrue("No se ha añadido bien el videjuego", vjservice.revisarPlataforma(juego.getPlatform(), juego.getName()) == true);
+    }
+	
 	
 	// antiguo tipoDatoEspecial()
 	@Test
@@ -93,6 +82,33 @@ public class AppTest {
 		}
 	}
 	
+	// antiguo datoNoCorrecto()
+	@Test
+	public void siDoyDeAltaUnVideojuegoVacioDeberiaSaltarExcepcion() throws IOException, NullPointerException, CsvValidationException {
+		// assertNull(VideojuegoDAO.addVideojuego(null));
+		ArrayList<String[]> lista = new ArrayList<>();
+		Videojuego video = new Videojuego();
+		videojuegodao.addVideojuego(video);
+		lista = fichero.leerCSV();
+		assertFalse(lista.get(lista.size()-1)[1] != "");
+		logger.info("Ha fallado por estar vacio");
+	}
+	
+	@Test
+	public void siMetoUnVideojuegoQueExisteDeberiaSaltarUnAviso() throws CsvValidationException, IOException {
+	    //Given...
+		ArrayList<String[]> lista = new ArrayList<>();
+		lista = fichero.leerCSV();
+		Videojuego juego = new Videojuego(2,"Super Mario Bros.","NES",1985,"Platform","Nintendo");
+	    // When...
+		videojuegodao.addVideojuego(juego);
+	    // Then...
+		logger.info("Salta excepción");
+	}
+	
+	
+	// Tests LISTAR VIDEOJUEGOS
+	
 	@Test
 	public void ultimoVideojuegoSeListaCorrectamente() throws IOException, CsvValidationException {
 		// assertNull(VideojuegoDAO.addVideojuego(null));
@@ -101,6 +117,23 @@ public class AppTest {
 		assertTrue(lista.get(lista.size()-1)[0] != null);
 		logger.info("El último videojuego se lista correctamente: " + lista.get(lista.size()-1)[0]);
 	}
+	
+	// Tests LISTAR VIDEOJUEGOS DEL GENERO PLATAFORMA
+	
+	@Test
+	public void videojuegosPlataformaSeListanCorrectamente() throws CsvValidationException, IOException {
+	    //Given...
+	    try {
+	        // When...
+	    	vjservice.listado_videojuegos_plataforma();
+	    } catch (Exception e) {
+	    	logger.info("Falla porque no tiene nada que listar");
+	    }
+	    // Then...
+	}
+	
+	
+	// Tests DAR DE BAJA VIDEOJUEGO
 	
 	// antiguo bajaVideojuegoExistente() 
 	@Test
@@ -128,46 +161,6 @@ public class AppTest {
 	    // Then...
 	}
 	
-	@Test
-	public void videojuegosPlataformaSeListanCorrectamente() throws CsvValidationException, IOException {
-	    //Given...
-	    try {
-	        // When...
-	    	vjservice.listado_videojuegos_plataforma();
-	    } catch (Exception e) {
-	    	logger.info("Falla porque no tiene nada que listar");
-	    }
-	    // Then...
-	}
-	
-	
-   @Test
-    public void siAñadoVideojuegoDeberiaEstarEnLaLista() throws CsvValidationException, IOException {
-	   
-        // Give: dado un videojuego
-        Videojuego juego = new Videojuego(99000, "Metroid", "DS", 2005, "Platform", "Nintendo");
-        // When: si lo doy de alta
-        videojuegodao.addVideojuego(juego);
-        // Then: aparece en la lista
-        assertTrue("No se ha añadido bien el videjuego", vjservice.revisarPlataforma(juego.getPlatform(), juego.getName()) == true);
-    }
-   
-//   @Test
-//   public void siAñadoVideojuegoDeberiaEstarEnLaLista2() throws CsvValidationException, IOException {
-//	   
-//       // Give: dada la lista y un videojuego
-//	   ArrayList<String[]> lista = new ArrayList<>();
-//	   lista = fichero.leerCSV();
-//	   int originalSize = lista.size();
-//       Videojuego juego = new Videojuego(99000, "Metroid", "DS", 2005, "Platform", "Nintendo");
-//       // When: si lo doy de alta
-//       videojuegodao.addVideojuego(juego);
-//       // Then: aparece en la lista
-//       assertTrue("No se ha añadido bien el videjuego", vjservice.revisarPlataforma(juego.getPlatform(), juego.getName()) == true);
-//       assertEquals(originalSize + 1, lista.size());
-//   }
-   
-   
    @Test
    public void siQuitoVideojuegoNoDeberiaEstarEnLaLista() throws CsvValidationException, IOException {
 	   
@@ -180,36 +173,85 @@ public class AppTest {
        // Then: aparece en la lista
        assertTrue("No se ha quitado bien el videojuego", vjservice.revisarPlataforma(juego.getPlatform(), juego.getName()) == false);
    }
-   
-   
+	
+	// Tests LISTAR VIDEOJUEGOS DEL SIGLO XX
+	
 	@Test
-	public void editoresNintendoSeListanCorrectamente() throws CsvValidationException, IOException {
+	public void videojuegosSigloXXSeListanCorrectamente() throws CsvValidationException, IOException {
 	    //Given...
 		ArrayList<String[]> lista = new ArrayList<>();
 		lista = fichero.leerCSV();
 	    try {
 	        // When...
-	    	vjservice.listado_videojuegos_plataforma();
+	    	vjservice.listado_videojuegos_sigloxx();
 	    } catch (Exception e) {
-	    	logger.info("Falla porque la lista esta vacia");
+	    	logger.info("Falla el método listar año par");
 	    }
 	    // Then...
 	}
+   
+   
+	// Tests LISTAR VIDEOJUEGOS POR GENERO
+   
+   
+   
+	// Tests LISTAR VIDEOJUEGOS NINTENDO
+   
+	@Test
+	public void videojuegosNintendoSeListanCorrectamente() throws CsvValidationException, IOException {
+	    //Given...
+		ArrayList<String[]> lista = new ArrayList<>();
+		lista = fichero.leerCSV();
+	    try {
+	        // When...
+	    	vjservice.listado_videojuegos_nintendo();
+	    } catch (Exception e) {
+	    	logger.info("Falla el método listar editores");
+	    }
+	    // Then...
+	}
+   
+   
+	// Tests LISTAR VIDEOJUEGOS AÑO PAR
 	
+	@Test
+	public void videojuegosAñoParSeListanCorrectamente() throws CsvValidationException, IOException {
+	    //Given...
+		ArrayList<String[]> lista = new ArrayList<>();
+		lista = fichero.leerCSV();
+	    try {
+	        // When...
+	    	vjservice.listado_videojuegos_anyo_par();
+	    } catch (Exception e) {
+	    	logger.info("Falla el método listar año par");
+	    }
+	    // Then...
+	}
+   
+   
+	// Tests LISTAR EDITORES
+     
+	@Test
+	public void editoresSeListanCorrectamente() throws CsvValidationException, IOException {
+	    //Given...
+		ArrayList<String[]> lista = new ArrayList<>();
+		lista = fichero.leerCSV();
+	    try {
+	        // When...
+	    	vjservice.listar_editores();
+	    } catch (Exception e) {
+	    	logger.info("Falla el método listar editores");
+	    }
+	    // Then...
+	}
+   
+   
+
+   
+   
+
 	
-	
-	
-	
-//1--AÑADIR UN VIDEOJUEGO AL CATALOGO
-//2--LISTA DE VIDEOJUEGOS GENERAL
-//3--LISTA DE VIDEOJUEGOS: GENERO -PLATAFORMAS-
-//4--ELIMINAR UN VIDEOJUEGO DEL CATALOGO
-//5--MODIFICAR UN VIDEOJUEGO DE LA LISTA
-//6--LISTA DE VIDEOJUEGOS: SIGLO XX
-//7--LISTA DE VIDEOJUEGOS POR GENERO
-//8--LISTA DE VIDEOJUEGOS: SOPORTE NINTENDO
-//9--LISTA DE VIDEOJUEGOS: AÑOS PARES
-//10--VER LA LISTA DE EDITORES
-	
+
+
 	
 }
