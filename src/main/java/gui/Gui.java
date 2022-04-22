@@ -121,7 +121,15 @@ public class Gui {
 						}
 						break; 
 					case 10:
-						System.out.println("Opcion en mantenimiento...");
+						try {
+							vjservice.listar_editores();
+						} catch (CsvValidationException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 						break;
 					case 0:
 						System.out.println("Fin del servicio");
