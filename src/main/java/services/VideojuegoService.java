@@ -13,12 +13,9 @@ import daos.VideojuegoDAO;
 public class VideojuegoService implements IVideojuegoService {
 
 	VideojuegoDAO videojuegodao = new VideojuegoDAO();
-	
+	Scanner sc = new Scanner(System.in);
 	
 	public void darDeAltaVideojuego() throws CsvValidationException, IOException {
-		
-		//ESCANER PARA LEER POR 
-		Scanner sc = new Scanner(System.in);
 		
 		ArrayList<String[]> fich = videojuegodao.listado();
 		
@@ -94,7 +91,6 @@ public class VideojuegoService implements IVideojuegoService {
 	
 	public void darDeBajaVideojuego() throws IOException, CsvValidationException {
 		
-		Scanner sc = new Scanner(System.in);
 		System.out.println("Introduzca el nombre del videojuego: ");
 		String nombre_videojuego = sc.next();
 		if(videojuegodao.removeVideojuego(nombre_videojuego)==true) {
@@ -117,7 +113,10 @@ public class VideojuegoService implements IVideojuegoService {
 			System.out.println(editores);
 		}
 	
-	public void listado_videojuegos_genero(String genero) throws CsvValidationException, IOException {
+	public void listado_videojuegos_genero() throws CsvValidationException, IOException {
+		
+		System.out.println("Dime un genero a buscar: ");
+		String genero=sc.next();
 		
 		for ( String[] juego : videojuegodao.listado() ) {
 		
@@ -152,7 +151,6 @@ public class VideojuegoService implements IVideojuegoService {
 	}
 	
 	public void modificarVideojuego() throws CsvValidationException, IOException {
-		Scanner sc = new Scanner(System.in);
 		
 		ArrayList<String[]> fich = videojuegodao.listado();
 		
