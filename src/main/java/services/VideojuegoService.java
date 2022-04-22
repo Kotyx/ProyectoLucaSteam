@@ -104,6 +104,53 @@ public class VideojuegoService implements IVideojuegoService {
 		}
 	}
 	
+	public void listar_editores() throws CsvValidationException, IOException{
+			
+			ArrayList<String> editores = new ArrayList();
+			
+			for ( String[] juego : videojuegodao.listado() ) {
+				
+				if(!editores.contains(juego[5])) {
+					editores.add(juego[5]);
+				}
+			}
+			System.out.println(editores);
+		}
+	
+	public void listado_videojuegos_genero(String genero) throws CsvValidationException, IOException {
+		
+		for ( String[] juego : videojuegodao.listado() ) {
+		
+			if(juego[4].equals(genero)) {
+				System.out.println(mostrarDatos(juego));
+			}
+		}
+	}
+	
+	public void listado_videojuegos_sigloxx() throws CsvValidationException, IOException {
+		
+		for ( String[] juego : videojuegodao.listado() ) {
+			if(!juego[3].equals("N/A") && !juego[3].equals("Year")) {
+				if(Integer.parseInt(juego[3])<2000 && Integer.parseInt(juego[3])>1900 ) {
+					System.out.println(mostrarDatos(juego));
+				}
+			}
+		}
+			
+	}
+	
+	public void listado_videojuegos_anyo_par() throws CsvValidationException, IOException {
+		
+		for ( String[] juego : videojuegodao.listado() ) {
+			if(!juego[3].equals("N/A") && !juego[3].equals("Year")) {
+				if(Integer.parseInt(juego[3])%2==0 ) {
+					System.out.println(mostrarDatos(juego));
+				}
+			}
+		}
+			
+	}
+	
 	public void modificarVideojuego() throws CsvValidationException, IOException {
 		Scanner sc = new Scanner(System.in);
 		
